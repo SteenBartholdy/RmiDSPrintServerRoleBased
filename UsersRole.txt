@@ -1,0 +1,7 @@
+Alice,true,false,false,false,false
+Bob,false,true,true,false,false
+Cecilia,false,false,false,true,false
+David,false,false,false,false,true
+Erica,false,false,false,false,true
+Fred,false,false,false,false,true
+George,false,false,false,false,true
