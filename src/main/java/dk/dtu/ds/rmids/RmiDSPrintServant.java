@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +27,7 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
     Hash shaHash = new Hash();
     UsersRole userRole;
     Roles role;
-    Access access = new Access(false,false,false,false,false,false,false,false,false);
+    Access access;
     String username = "";
     String password = "";
     
@@ -178,6 +180,7 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
         ArrayList<User> userList = new ArrayList<>();
         ArrayList<Roles> roleList = new ArrayList<>();
         ArrayList<UsersRole> userRoleList = new ArrayList<>();
+        access = new Access(false,false,false,false,false,false,false,false,false);
         
         try {
             username = aes.decrypt(user.getUsername());
@@ -287,6 +290,10 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
                             }
                             if(r.isStop())
                             {
+                                access.setStop(true);
+                            }
+                            if(r.isRestart())
+                            {
                                 access.setRestart(true);
                             }
                             if(r.isStatus())
@@ -327,6 +334,10 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
                                 access.setStart(true);
                             }
                             if(r.isStop())
+                            {
+                                access.setStop(true);
+                            }
+                            if(r.isRestart())
                             {
                                 access.setRestart(true);
                             }
@@ -369,6 +380,10 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
                             }
                             if(r.isStop())
                             {
+                                access.setStop(true);
+                            }
+                            if(r.isRestart())
+                            {
                                 access.setRestart(true);
                             }
                             if(r.isStatus())
@@ -409,6 +424,10 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
                                 access.setStart(true);
                             }
                             if(r.isStop())
+                            {
+                                access.setStop(true);
+                            }
+                            if(r.isRestart())
                             {
                                 access.setRestart(true);
                             }
@@ -451,6 +470,10 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
                             }
                             if(r.isStop())
                             {
+                                access.setStop(true);
+                            }
+                            if(r.isRestart())
+                            {
                                 access.setRestart(true);
                             }
                             if(r.isStatus())
@@ -472,7 +495,7 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
             }
                 
         }
-        System.out.println("Sådan ser access ud: " + access.isPrint() + "    " + access.isQueue() + "   " + access.isTopQueue() + "   " + access.isStart() + "    " + access.isStart() + "   " + access.isRestart() + "   " + access.isStatus() + "   " + access.isReadConfig() + "   " + access.isSetConfig());
+        System.out.println("Sådan ser access ud: " + access.isPrint() + "    " + access.isQueue() + "   " + access.isTopQueue() + "   " + access.isStart() + "    " + access.isStop() + "   " + access.isRestart() + "   " + access.isStatus() + "   " + access.isReadConfig() + "   " + access.isSetConfig());
         for (User users : userList) {
             if(users.getUsername().equals(username))
             {
@@ -509,7 +532,10 @@ public class RmiDSPrintServant extends UnicastRemoteObject implements RmiDSPrint
             }
             
             PrintWriter pw = new PrintWriter(new FileWriter(logFile, true));
-            pw.append(username + " has used method: " + method + ". Time: " + System.currentTimeMillis() + "\n");
+            long ms = System.currentTimeMillis();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss");
+            Date result = new Date(ms);
+            pw.append(username + " has used method: " + method + ". Time: " + sdf.format(result) + "\n");
             pw.close();
             System.out.println("Done writing");
         }
