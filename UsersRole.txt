@@ -1,7 +1,8 @@
 Alice,true,false,false,false,false
-Bob,false,true,true,false,false
+Henry,false,false,false,false,true
 Cecilia,false,false,false,true,false
 David,false,false,false,false,true
 Erica,false,false,false,false,true
 Fred,false,false,false,false,true
-George,false,false,false,false,true
+George,false,true,false,false,true
+Ida,false,false,false,true,false
